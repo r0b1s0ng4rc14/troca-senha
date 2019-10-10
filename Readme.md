@@ -4,8 +4,9 @@
 
 Pacotes necessários:
 
--- whois
--- sshpass
+- whois
+
+- sshpass
 
 ## Programas incluídos
 
