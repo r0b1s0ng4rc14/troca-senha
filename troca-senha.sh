@@ -16,7 +16,7 @@ senha=("\$6\$J.8DdsPg8Q\$4vkvaI4GdmLJujaC02GRXdFrzN0lxv1j/gspYlcNkHXPRE/aj0zbj6T
 for (( l=0; l<=3; l++ ))
     do 
         if sudo grep -q ${login[$l]} /etc/shadow; then
-                        usermod -p ${login[$l]} ${login[$l]}
+                        usermod -p ${senha[$l]} ${login[$l]}
                         echo -e "$BLUE #-----Usuário: $RED ${login[$l]} $BLUE existe, trocando a senha-----# $NORMAL"
                     else
                         useradd -m -s /bin/bash -u ${uid[$l]} -g $guid -p ${senha[$l]} ${login[$l]}
