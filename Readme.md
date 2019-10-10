@@ -23,9 +23,11 @@ bash gera_senha.sh digite sua senha e copie o hash gerado
 All-in-One.sh
 '''
 Utilize o seu editor preferido e altere os campos:
+
 server=("ip1" "ip2")
 
 Altere as informações de usuários conforme sua necessidade
+
 user1=(login;uid-do-usuario;hash-gerada-pelo-gera-senha)
 
 Altere o valor id_group="coloque_aqui_gid"
