@@ -1,5 +1,6 @@
 #!bin/bash
 
+#Siga os passos no Readme.md
 
 server=("192.168.50.11" "192.168.50.12")
 read -p "Enter username : " usuario
