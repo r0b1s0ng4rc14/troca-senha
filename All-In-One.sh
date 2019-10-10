@@ -1,7 +1,7 @@
 #!bin/bash
 
 
-server=("192.168.50.11")
+server=("192.168.50.11" "192.168.50.12")
 read -p "Enter username : " usuario
 read -s -p "Enter password : " senha
 
@@ -13,7 +13,7 @@ BLUE="\e[34m"
 
 
 for ssh in "${server[@]}"
-    do access
+    do
     echo -e "$GREEN Copiando arquivos...\n $RED" $ssh $NORMAL
     #sshpass -p $senha ssh -P 2222 -o StrictHostKeyChecking=no   $usuario@$ssh:.
     sshpass -p $senha ssh -o StrictHostKeyChecking=no  $usuario@$ssh bash -c 'cat <<EOF >access.sh
@@ -71,10 +71,10 @@ for ssh in "${server[@]}"
 EOF'
     echo -e "\n"
     echo -e "$GREEN Executando scripts...\n $RED" $ssh $NORMAL
-    sshpass -p $senha ssh $usuario@$ssh "printf '$senha\n' | sudo -S bash access.sh"
+    sshpass -p $senha ssh -o StrictHostKeyChecking=no  $usuario@$ssh "printf '$senha\n' | sudo -S bash access.sh"
     echo -e "\n"
     echo -e "$GREEN Limpando arquivos temporários...\n $RED $ssh \n" $NORMAL            
-    #sshpass -p $senha ssh $usuario@$ssh "printf '$senha\n' | sudo -S rm -f access.sh"
+    sshpass -p $senha ssh -o StrictHostKeyChecking=no  $usuario@$ssh "printf '$senha\n' | sudo -S rm -f access.sh"
     echo -e "\n"    
     echo -e "$BLUE FIM \n"
 done
