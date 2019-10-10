@@ -7,7 +7,7 @@ BLUE="\e[34m"
 
 
 
-server=("127.0.0.1")
+server=("127.0.0.1" "192.168.0.89")
 senha="ubuntu"
 usuario="ubuntu"
 
