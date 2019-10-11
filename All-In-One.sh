@@ -1,5 +1,7 @@
 #!bin/bash
 
+#Siga os passos no Readme.md
+
 read -p "Enter username : " usuario
 read -s -p "Enter password : " senha
 
