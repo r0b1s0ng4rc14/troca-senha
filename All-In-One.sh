@@ -1,7 +1,5 @@
 #!bin/bash
 
-
-server=("192.168.50.11" "192.168.50.12")
 read -p "Enter username : " usuario
 read -s -p "Enter password : " senha
 
@@ -10,18 +8,17 @@ GREEN="\033[32m"
 NORMAL="\033[0;39m"
 BLUE="\e[34m"
 
-
+#declare server
+#server=("192.168.50.11" "192.168.50.12")
+IFS=$'\r\n' GLOBIGNORE='*' command eval  'server=($(cat servers.txt))'
 
 for ssh in "${server[@]}"
     do
+
     echo -e "\n#--------------------------# $RED  $ssh $NORMAL #--------------------------#  " 
     echo -e "$GREEN Copiando arquivos..."
     sshpass -p $senha ssh -o StrictHostKeyChecking=no  $usuario@$ssh bash -c 'cat <<EOF >access.sh
     #!bin/bash    
-    RED="\033[31m"
-    GREEN="\033[32m"
-    NORMAL="\033[0;39m"
-    BLUE="\e[34m"
     RED="\033[31m"
     GREEN="\033[32m"
     NORMAL="\033[0;39m"
@@ -44,19 +41,24 @@ for ssh in "${server[@]}"
             id_user=\${user_info[1]}
             pass=\${user_info[2]}
             
-            if grep -i \$user /etc/passwd &> /dev/null; then
+            if grep -i \$user: /etc/passwd &> /dev/null; then
                 echo -e "#------------------------------------------------------------------------#"
                 printf "%-74s%s\n" "#    Usuário  \$user existe." "#" 
-                usermod -p "\$pass" \${user} &> /dev/null  \
-                    && printf "# \$BLUE %-68s \$NORMAL %s \n" "  Senha alterada." "#"\
-                    || printf "# \$RED %-68s \$NORMAL %s \n" "  Falha ao alterar a senha." "#"
-            
+                if result=\`usermod -p "\$pass" \${user} 2>&1 > /dev/null \`; then
+                    printf "# \$BLUE %-68s \$NORMAL %s \n" "  Senha alterada." "#"
+                else
+                    printf "# \$RED %-68s \$NORMAL %s \n" "  Falha ao alterar a senha." "#"
+                    printf "# \$RED %-68s \$NORMAL %s \n" "  \$result" "#"
+                fi           
             else
                 echo -e "#------------------------------------------------------------------------#"
                 printf "%-75s%s\n" "#    Usuário: \$user não existe." "#" 
-                useradd -m -s /bin/bash -u \$id_user -g \$id_group -p \$pass \$user &> /dev/null \
-                    && printf "# \$GREEN %-69s \$NORMAL %s \n" "  Usuário cadastrado " "#"  \
-                    || printf "# \$RED %-69s \$NORMAL %s \n" "  Falha ao adicionar usuário" "#"
+                if result=\`useradd -m -s /bin/bash -u \$id_user -g \$id_group -p \$pass \$user 2>&1 > /dev/null\`; then
+                    printf "# \$GREEN %-69s \$NORMAL %s \n" "  Usuário cadastrado " "#" 
+                else
+                    printf "# \$RED %-69s \$NORMAL %s \n" "  Falha ao adicionar usuário" "#"
+                    printf "# \$RED %-68s \$NORMAL %s \n" "  \$result" "#"
+                fi
             fi 
         done
             echo -e "#------------------------------------------------------------------------#"
@@ -72,8 +74,7 @@ EOF'
     echo -e "$GREEN Executando scripts... $NORMAL"
     sshpass -p $senha ssh -o StrictHostKeyChecking=no  $usuario@$ssh "printf '$senha\n' | sudo -S bash access.sh "
     echo -e "$GREEN Limpando arquivos temporários... $NORMAL "
-    sshpass -p $senha ssh -o StrictHostKeyChecking=no  $usuario@$ssh "printf '$senha\n' | sudo -S rm -f access.sh &> /dev/null"    
+    #sshpass -p $senha ssh -o StrictHostKeyChecking=no  $usuario@$ssh "printf '$senha\n' | sudo -S rm -f access.sh &> /dev/null"    
     echo -e "$BLUE FIM $NORMAL\n"
 done
-
 
