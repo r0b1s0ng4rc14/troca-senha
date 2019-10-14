@@ -44,5 +44,5 @@ bash gera_senha.sh # digite sua senha e copie o hash gerado
     bash All-In_one.sh # será solicitado o usuário e senha o usuário deve ter permissão de sudo.
     #OU execute
     nohup bash All-In_one.sh #Caso deseje logar a sáida do script
-    	```
+    ```
     	
