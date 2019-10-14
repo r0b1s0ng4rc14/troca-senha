@@ -76,7 +76,7 @@ EOF'
     echo -e "$GREEN Executando scripts... $NORMAL"
     sshpass -p $senha ssh -o StrictHostKeyChecking=no  $usuario@$ssh "printf '$senha\n' | sudo -S bash access.sh "
     echo -e "$GREEN Limpando arquivos temporários... $NORMAL "
-    #sshpass -p $senha ssh -o StrictHostKeyChecking=no  $usuario@$ssh "printf '$senha\n' | sudo -S rm -f access.sh &> /dev/null"    
+    sshpass -p $senha ssh -o StrictHostKeyChecking=no  $usuario@$ssh "printf '$senha\n' | sudo -S rm -f access.sh &> /dev/null"    
     echo -e "$BLUE FIM $NORMAL\n"
 done
 
