@@ -1,40 +1,45 @@
 # Projeto troca senha
 
+O Objetivo desse projeto é adicionar novos usuários em um ou mais servidores, caso o usuário já exista sua senha será alterada
+
 ## Pré-requisitos
 
-Pacotes necessários:
-
 - whois
-
 - sshpass
 
-## Programas incluídos
-
-gera_senha.sh
-All-in-One.sh
+```bash
+apt-get install whois sshpass
+```
 
 ## Como utilizar:
 
-gera_senha.sh
-'''
-bash gera_senha.sh digite sua senha e copie o hash gerado
-'''
 
-All-in-One.sh
-'''
-Utilize o seu editor preferido e altere os campos:
+1. Execute o arquivo **gera_senha.sh**
+``` bash
+bash gera_senha.sh # digite sua senha e copie o hash gerado
+```
 
-server=("ip1" "ip2")
+2. Edite o arquivo **servidores.txt** adicionando os IPs desejados 
 
-Altere as informações de usuários conforme sua necessidade
+``` bash
+192.168.0.1
+192.168.0.2
+...
+```
 
-user1=(login;uid-do-usuario;hash-gerada-pelo-gera-senha)
+3. No arquivo **All-in-One.sh** 
+	1. Altere as informações de usuários conforme sua necessidade
+	
+    ``` bash
+    user1=(login;uid-do-usuario;hash-gerada-pelo-gera-senha)
+    ```
+	
+	2. Altere o valor do Group_ID
 
-Altere o valor id_group="coloque_aqui_gid"
-'''
-
-'''
-Executando:
-bash All-in-One.sh entre com seu usuário e sua senha 
-'''
-
+	``` bash
+	id_group="coloque_aqui_gid"
+	```
+	3. Execute o arquivo
+	``` bash
+    bash All-In_one.sh # será solicitado o usuário, o usuário deve ter permissão de sudo.
+    ```
